@@ -1,0 +1,42 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+        "http://www.w3.org/TR/html4/loose.dtd">
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Confirmation Page</title>
+</head>
+<body>
+<h1>This is your order: do you want to confirm it?</h1>
+<table border="1">
+    <thead>
+    <tr>
+        <th>Service Package</th>
+        <th>Validity Period</th>
+        <th>Optional Product</th>
+        <th>Total Price</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td th:text="${session.subscription.servicePackage.name}"></td>
+        <td th:text="${session.subscription.validityPeriod.months}"></td>
+        <td>
+        	<li th:each="op : ${session.subscription.optionalProducts}">
+        	 <span th:text="${op.name}"></span>
+        	</li>
+        </td>
+        <td th:text="${session.subscription.totalPrice}"></td>
+    </tr>
+    </tbody>
+    
+</table>
+    <div th:if="${session.consumer != null}" >
+        <a th:href="@{/Payment}">Buy</a>
+        <a th:href="@{/Payment(payment=1)}">Buy (success)</a>
+        <a th:href="@{/Payment(payment=0)}">Buy (failure)</a>
+    </div>
+    <div th:if="${session.consumer == null}" >
+        <a th:href="@{/index.html}">Login</a>
+    </div>
+
+</body>
+</html>

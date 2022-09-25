@@ -1,0 +1,36 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+        "http://www.w3.org/TR/html4/loose.dtd">
+
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="ISO-8859-1">
+    <title>Login page</title>
+</head>
+<body>
+    <h1>Welcome To The Consumer Application</h1>
+    <span th:text=" ${errorMsg}"></span>
+    <div th:if ="${session.subscription == null}">
+        <a href="/DB2Project_WEB/Home">Submit Later</a>
+    </div>
+    <div align="right" th:if="${registration!=null}" th:text="${registration == 'KO'}? 'Something went wrong' : 'Please now login'"></div>
+    <div align="center">
+        <p>Login Here:</p>
+        <form action="CheckLogin" method="POST">
+            Email: <input type="text" name="email" required> <br>
+            Username: <input type="text" name="username" required> <br>
+            Password: <input type="password" name="password" required><br>
+            <input type="submit" value="login">
+        </form>
+    </div>
+    <br>
+    <div align="center">
+        <p>Registration here:</p>
+        <form action="Registration" method="POST">
+            Email: <input type="text" name="email" required> <br>
+            Username: <input type="text" name="username" required> <br>
+            Password: <input type="password" name="password" required><br>
+            <input type="submit" value="register">
+        </form>
+    </div>
+</body>
+</html>

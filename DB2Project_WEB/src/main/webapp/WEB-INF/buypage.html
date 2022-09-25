@@ -1,0 +1,44 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+        "http://www.w3.org/TR/html4/loose.dtd">
+
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="ISO-8859-1">
+    <title>Buy page</title>
+</head>
+<body>
+<div th:text="${errorMsg}"></div>
+<div>
+    <p>You chose service package: <span th:text="${session.service_package.name}"></span></p>
+    <p>Select the validity period and the optional product you want!</p>
+    <form action="#" th:action="@{/Confirmation}" method="POST">
+        <fieldset>
+            <p>
+                Choose a validity period:
+                <select name="validity_periods" id="validity_periods">
+                    <option th:each="vp : ${validity_periods}" 
+                            th:text="${'Months:' + vp.months + '; Fee (euros per month): ' + vp.fee}"
+                            th:value="${vp.id}" required>
+                    </option>
+                </select>
+            </p>
+            <p>
+                Choose your optional products: <select name="optprods" id ="optprods" multiple ="multiple">
+                                               <option th:each="prod : ${optprods}"
+                                                      th:text="${'Name: '+prod.name+'; Fee (euros per month): '+prod.fee}"
+                                                      th:value="${prod.id}">
+                                                </option>
+                                            	</select>
+            </p>
+            <p>
+                Choose the start date for your subscription: <input type="date" name="date"
+                                  th:attr="min=${#dates.format(#dates.createNow(), 'yyyy-MM-dd')}"
+                                  placeholder="yyyy-mm-dd" required />
+            </p>
+
+            <input type="submit" name="Confirm" value = "confirm">
+        </fieldset>
+    </form>
+</div>
+</body>
+</html>

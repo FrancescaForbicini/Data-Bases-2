@@ -1,0 +1,60 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+        "http://www.w3.org/TR/html4/loose.dtd">
+
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="ISO-8859-1">
+    <title>Home page</title>
+</head>
+<body>
+<div align="right" th:text="${session.consumer!=null}? ${session.consumer.username} : 'User is anonymous'"></div>
+<div id = "payment" th:if = "${payment} != null" th:text="${payment==1}? 'Payment Successful' : 'Payment unsuccessful' "></div>
+<div align="right" th:if ="${session.consumer!=null}" >
+		<a th:href="@{/Logout}">Logout</a>
+</div>
+<h1>Here are the available service packages:</h1>
+<ul>
+    <li th:each="pack : ${service_packages}">
+        <a th:href="@{/Buy(spid=${pack.id})}"><span th:text="${pack.name}"></span></a>
+        <ul>
+            <li th:each="service : ${pack.services}">
+                <table border="1">
+                    <thead>
+                    <tr>
+                        <th>Number of minutes</th>
+                        <th>Number of SMS</th>
+                        <th>Fee for extra minutes</th>
+                        <th>Fee for extra SMS</th>
+                        <th>Number of GBs</th>
+                        <th>Fee for extra GBs</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td th:text="${service.numberMinutes}"></td>
+                            <td th:text="${service.numberSMS}"></td>
+                            <td th:text="${service.feeExtraMin}"></td>
+                            <td th:text="${service.feeExtraSMS}"></td>
+                            <td th:text="${service.numberGB}"></td>
+                            <td th:text="${service.feeExtraGB}"></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </li>
+        </ul>
+    </li>
+</ul>
+<div th:if="${session.consumer!=null}">
+    <h1 th:if="${rejected_orders!=null}">List of rejected orders:</h1>
+    <ul>
+        <li th:each="order : ${rejected_orders}">
+            <a th:href="@{/Confirmation(orderid=${order.id})}">
+            <span th:text="'Name: ' + ${order.servicePackage.name} + '; '"></span></a>
+            <span th:text="'Total: ' + ${order.total} + '; '"></span>
+            <span th:text="'Date and hour of the order: ' + ${order.timestamp}"></span>
+        </li>
+    </ul>
+</div>
+
+</body>
+</html>

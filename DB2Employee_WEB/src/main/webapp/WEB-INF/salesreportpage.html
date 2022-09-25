@@ -1,0 +1,128 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+        "http://www.w3.org/TR/html4/loose.dtd">
+
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="ISO-8859-1">
+<title>Sales Report page</title>
+</head>
+<body>
+	<div align="right"><a th:href="@{/Logout}">Logout</a></div>
+	<div align="left"><a th:href="@{/Home}">Back to Home</a></div>	
+	<div th:text="${errormsg}"></div><br>
+	<div>
+		Total purchases, total sales with and without optional products, average number of optional product sold per package: <br>
+		<table border="1">
+			<thead>
+			<tr>
+				<th>Service package name</th>
+				<th>Total purchases</th>
+				<th>Total sales (with optional products)</th>
+				<th>Total sales (without optional products)</th>
+				<th>Average number of optional products sold</th>
+			</tr>
+			</thead>
+			<tbody>
+			<tr th:each="sp : ${packPurchases}">
+				<td th:text="${sp.pack.name}"></td>
+				<td th:text="${sp.totalPurchases}"></td>
+				<td th:text="${sp.totalSalesOp}"></td>
+				<td th:text="${sp.totalSalesNotOp}"></td>
+				<td th:text="${sp.averageOp}"></td>
+			</tr>
+			</tbody>
+		</table>
+	</div><br>
+	<div>
+		Total purchases per package and validity period: <br>
+		<table border="1">
+			<thead>
+			<tr>
+				<th>Service package name</th>
+				<th>Validity period (months)</th>
+				<th>Total purchases</th>
+			</tr>
+			</thead>
+			<tbody>
+			<tr th:each="spvp : ${packvpPurchases}">
+				<td th:text="${spvp.servicePackage.name}"></td>
+				<td th:text="${spvp.validityPeriod.months}"></td>
+				<td th:text="${spvp.purchases}"></td>
+			</tr>
+			</tbody>
+		</table>
+	</div><br>
+	<div>
+		Best seller optional product: <br>
+		<table border="1">
+			<thead>
+			<tr>
+				<th>Optional product name</th>
+				<th>Total sales</th>
+			</tr>
+			</thead>
+			<tbody>
+			<tr>
+				<td th:if="${op!=null}" th:text="${op.optionalProduct.name}"></td>
+				<td th:if="${op!=null}" th:text="${op.opSales}"></td>
+			</tr>
+			</tbody>
+		</table>
+	</div><br>
+	<div>
+		List of insolvent consumers: <br>
+		<table border="1">
+			<thead>
+			<tr>
+				<th>Consumer username</th>
+				<th>Consumer mail</th>
+			</tr>
+			</thead>
+			<tbody>
+			<tr th:each="consumer : ${insolventCustomers}">
+				<td th:text="${consumer.username}"></td>
+				<td th:text="${consumer.email}"></td>
+			</tr>
+			</tbody>
+		</table>
+	</div><br>
+	<div>
+		List of suspended orders: <br>
+		<table border="1">
+			<thead>
+			<tr>
+				<th>Consumer</th>
+				<th>Date</th>
+				<th>Total</th>
+			</tr>
+			</thead>
+			<tbody>
+			<tr th:each="order : ${suspendedOrders}">
+				<td th:text="${order.consumer.username}"></td>
+				<td th:text="${order.timestamp}"></td>
+				<td th:text="${order.total}"></td>
+			</tr>
+			</tbody>
+		</table>
+	</div><br>
+	<div>
+		List of alerts: <br>
+		<table border="1">
+			<thead>
+			<tr>
+				<th>Time of last rejection</th>
+				<th>Total pending amount</th>
+				<th>Consumer</th>
+			</tr>
+			</thead>
+			<tbody>
+			<tr th:each="audit : ${audits}">
+				<td th:text="${audit.rejectionTimestamp}"></td>
+				<td th:text="${audit.totalPrice}"></td>
+				<td th:text="${audit.consumer.username}"></td>
+			</tr>
+			</tbody>
+		</table>
+	</div><br>
+</body>
+</html>

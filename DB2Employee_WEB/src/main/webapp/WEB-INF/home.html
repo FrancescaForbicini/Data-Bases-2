@@ -1,0 +1,68 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+        "http://www.w3.org/TR/html4/loose.dtd">
+
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="ISO-8859-1">
+<title>Homepage</title>
+</head>
+<body>
+	<div align="right">
+		<a th:href="@{/Logout}">Logout</a>
+	</div><br>
+	<div th:text="${errorMsg}"></div><br>
+	<div>
+		<form action="#" th:action="@{/CreateServicePack}" method="POST">
+			<fieldset>
+				Create a new service package:
+				<p>
+					Choose a name: <input type="text" name="name" required><br>
+				</p>
+                <p>
+					Choose the services to be included: 
+						<select name="services" multiple = "multiple">
+							<option th:each="s : ${services}"
+									th:text="${'Minutes: '+s.numberMinutes+'; SMS: '+s.numberSMS+'; GB: '+s.numberGB+'; Fee for extra minutes: '+s.feeExtraMin
+											+'; Fee for extra SMS: '+s.feeExtraSMS+'; Fee for extra GB: '+s.feeExtraGB+'; Service type: '+s.serviceType}"
+									th:value="${s.id}" >
+							</option> 
+						</select> <br>
+				</p>
+				<p>
+					Choose possible validity period: 
+					<select name="valpers" multiple="multiple">
+						<option th:each="vp : ${validityPeriods}"
+								th:text="${'Months: '+vp.months+'; Fee (euros per month): '+vp.fee}"
+								th:value="${vp.id}">
+						</option>
+					</select> <br>
+				</p>
+				<p>
+					Choose possible optional products: 
+						<select name="optprods" multiple="multiple">
+							<option th:each="prod : ${optProds}"
+									th:text="${'Name: '+prod.name+'; Fee (euros per month): '+prod.fee}"
+									th:value="${prod.id}" >
+							</option>
+						</select> <br>
+				</p>
+				<input type="submit" name="Confirm" value="confirm">
+			</fieldset>
+		</form>
+	</div><br>
+	<div>
+		<form action="#" th:action="@{/CreateOptProd}" method="POST">
+			<fieldset>
+				Create a new optional product:
+				
+				Name: <input type="text" name="name" required><br>
+				Fee: <input type="number" name="fee" required><br>
+				<input type="submit" name="Confirm" value="confirm">
+			</fieldset>
+		</form>
+	</div>
+	<div>
+		<a href="/DB2Employee_WEB/SalesReport">Go to Sales Report page</a>
+	</div>
+</body>
+</html>
